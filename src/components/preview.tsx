@@ -11,8 +11,7 @@ export function ResumePreview() {
     window.print();
   };
 
-  const currentTemplate = (active.selectedTemplateId || "classic") as typeof TEMPLATE_IDS[number];
-  const currentIndex = Math.max(0, TEMPLATE_IDS.indexOf(currentTemplate));
+  const currentIndex = Math.max(0, (TEMPLATE_IDS as readonly string[]).indexOf(active.selectedTemplateId || "classic"));
 
   const handlePrev = () => {
     const prevIndex = (currentIndex - 1 + TEMPLATE_IDS.length) % TEMPLATE_IDS.length;

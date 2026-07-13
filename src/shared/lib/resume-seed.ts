@@ -9,6 +9,7 @@ export function emptyProfile(name = "Untitled Resume"): ResumeProfile {
     id: uid(),
     profileName: name,
     selectedTemplateId: "minimalist",
+    pageCount: 1,
     personalInfo: {
       fullName: "",
       title: "",
@@ -24,6 +25,8 @@ export function emptyProfile(name = "Untitled Resume"): ResumeProfile {
     experience: [],
     projects: [],
     education: [],
+    achievements: [],
+    certificates: [],
   };
 }
 
@@ -32,6 +35,7 @@ export function seedProfile(): ResumeProfile {
     id: uid(),
     profileName: "Full Stack Track",
     selectedTemplateId: "minimalist",
+    pageCount: 1,
     personalInfo: {
       fullName: "Alex Morgan",
       title: "Senior Full Stack Engineer",
@@ -123,9 +127,11 @@ export function seedProfile(): ResumeProfile {
         location: "Ann Arbor, MI",
         startDate: "2013-09",
         endDate: "2017-05",
-        details: "GPA 3.8/4.0 · Focus: Distributed Systems, HCI",
+        details: "Graduated with Honors. Minor in Mathematics.",
       },
     ],
+    achievements: [],
+    certificates: [],
   };
 }
 

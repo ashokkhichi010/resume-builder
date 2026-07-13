@@ -47,15 +47,33 @@ export interface Education {
   details: string;
 }
 
+export interface Achievement {
+  id: string;
+  title: string;
+  date: string;
+  description: string;
+}
+
+export interface Certificate {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  link: string;
+}
+
 export interface ResumeProfile {
   id: string;
   profileName: string;
   selectedTemplateId: string;
+  pageCount: 1 | 2;
   personalInfo: PersonalInfo;
   skills: CategorizedSkills;
   experience: WorkExperience[];
   projects: Project[];
   education: Education[];
+  achievements: Achievement[];
+  certificates: Certificate[];
 }
 
 export interface AppState {
@@ -69,6 +87,11 @@ export const TEMPLATE_IDS = [
   "techlead",
   "executive",
   "startup",
+  "atlas",
+  "nexus",
+  "prisma",
+  "nova",
+  "ridge",
 ] as const;
 export type TemplateId = (typeof TEMPLATE_IDS)[number];
 
@@ -78,4 +101,18 @@ export const TEMPLATE_META: Record<TemplateId, { name: string; description: stri
   techlead: { name: "Tech Lead", description: "Monospace tech tags, bold sans" },
   executive: { name: "Executive Sleek", description: "Slate navy headers, dense" },
   startup: { name: "Startup Builder", description: "Roles left, dates right" },
+  atlas: { name: "Atlas", description: "Bold left border, clean sans, numbered pills" },
+  nexus: { name: "Nexus", description: "Dark header band, white name, light body" },
+  prisma: { name: "Prisma", description: "Teal accent color, sleek rules" },
+  nova: { name: "Nova", description: "Warm minimal tones, compact elegant" },
+  ridge: { name: "Ridge", description: "Editorial style, thick horizontal rules" },
 };
+
+export const PAGE_LIMITS = {
+  bullets: { 1: 3, 2: 5 },
+  totalBullets: { 1: 12, 2: 24 },
+  sections: { 1: 7, 2: 9 },
+  bulletsCharLength: { 1: 100, 2: 160 },
+  summaryCharLength: { 1: 300, 2: 500 },
+  detailsCharLength: { 1: 100, 2: 150 }
+} as const;

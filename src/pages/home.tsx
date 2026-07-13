@@ -72,7 +72,7 @@ export default function HomePage() {
               How it works
             </a>
             <Link
-              to={PATHS.EDITOR}
+              to={PATHS.DASHBOARD}
               className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
             >
               Open Builder →
@@ -121,7 +121,7 @@ export default function HomePage() {
 
           <div className="flex flex-wrap justify-center gap-3">
             <Link
-              to={PATHS.EDITOR}
+              to={PATHS.DASHBOARD}
               className="px-8 py-3.5 rounded-xl bg-primary text-primary-foreground font-bold text-base hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/30"
             >
               Start Building for Free
@@ -247,7 +247,7 @@ export default function HomePage() {
               No account. No credit card. Just open the builder and go.
             </p>
             <Link
-              to={PATHS.EDITOR}
+              to={PATHS.DASHBOARD}
               className="inline-flex items-center gap-2 px-10 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-lg hover:opacity-90 active:scale-95 transition-all shadow-xl shadow-primary/25"
             >
               Build My Resume →

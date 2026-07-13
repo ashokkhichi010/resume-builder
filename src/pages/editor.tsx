@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dashboard } from "@/components/dashboard";
 import { Forms } from "@/components/forms";
 import { ResumePreview } from "@/components/preview";
-import { Edit2, Eye } from "lucide-react";
+import { Edit2, Eye, Printer } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 
 export default function EditorPage() {
@@ -32,7 +32,7 @@ export default function EditorPage() {
 
         {/* Preview Pane */}
         <section id="print-area" className={cn(
-          "relative flex flex-col lg:max-h-[calc(100vh-8.5rem)]",
+          "relative flex flex-col max-h-[calc(100vh-4.1rem-60px)] lg:max-h-[calc(100vh-4.1rem)]",
           activeTab === "preview" ? "block" : "hidden lg:flex",
           !showPreview && "lg:hidden"
         )}>
@@ -55,6 +55,13 @@ export default function EditorPage() {
         >
           <Eye className="h-5 w-5" />
           <span className="text-[10px] font-medium uppercase tracking-wider">Preview</span>
+        </button>
+        <button
+          onClick={() => window.print()}
+          className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors text-muted-foreground hover:text-primary"
+        >
+          <Printer className="h-5 w-5" />
+          <span className="text-[10px] font-medium uppercase tracking-wider">Print</span>
         </button>
       </div>
     </div>

@@ -201,11 +201,19 @@
         display: none !important;
     }
 
+    #root,
+    #root > div {
+        display: block !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
     main {
         display: block !important;
     }
 
     #print-area {
+        display: block !important;
         overflow: visible !important;
         max-height: none !important;
         background: #ffffff !important;

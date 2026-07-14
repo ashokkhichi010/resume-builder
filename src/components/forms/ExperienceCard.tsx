@@ -10,10 +10,10 @@ export function ExperienceCard({ exp, index, total, onChange, onDelete, onMove, 
   onChange: (e: WorkExperience) => void; onDelete: () => void; onMove: (dir: -1 | 1) => void;
 }) {
   return (
-    <Card className="p-3 space-y-3">
+    <Card className={`p-3 space-y-3 transition-opacity duration-200 ${exp.hidden ? 'opacity-50' : ''}`}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2 sm:border-none sm:pb-0">
         <div className="text-sm font-medium truncate min-w-0">{exp.role || "New role"} {exp.company && <span className="text-muted-foreground">· {exp.company}</span>}</div>
-        <ItemToolbar index={index} total={total} onMove={onMove} onDelete={onDelete} />
+        <ItemToolbar index={index} total={total} onMove={onMove} onDelete={onDelete} hidden={exp.hidden} onToggleHide={() => onChange({ ...exp, hidden: !exp.hidden })} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label="Role"><Input value={exp.role} onChange={(e) => onChange({ ...exp, role: e.target.value })} /></Field>
@@ -28,7 +28,20 @@ export function ExperienceCard({ exp, index, total, onChange, onDelete, onMove, 
           Current role
         </label>
       </div>
-      <Field label="Bullets"><BulletsEditor maxBullets={limits.bullets} maxChar={limits.maxBulletsCharLength} bullets={exp.bullets} onChange={(b) => onChange({ ...exp, bullets: b })} /></Field>
+      <Field label="Bullets">
+        <BulletsEditor 
+          maxBullets={limits.bullets} 
+          maxChar={limits.maxBulletsCharLength} 
+          bullets={exp.bullets} 
+          onChange={(b) => onChange({ ...exp, bullets: b })} 
+          hiddenBullets={exp.hiddenBullets}
+          onToggleHide={(idx) => {
+            const arr = exp.hiddenBullets || [];
+            const next = arr.includes(idx) ? arr.filter(i => i !== idx) : [...arr, idx];
+            onChange({ ...exp, hiddenBullets: next });
+          }}
+        />
+      </Field>
     </Card>
   );
 }

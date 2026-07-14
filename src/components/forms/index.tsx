@@ -3,7 +3,7 @@ import { useResume } from "@/Providers/resume-provider";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { Button } from "@/shared/ui/button";
-import { Plus, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, AlertCircle, ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
 import { uid } from "@/shared/lib/resume-seed";
 import { PAGE_LIMITS, type ResumeProfile } from "@/shared/lib/resume-types";
 import { cn } from "@/shared/lib/utils";
@@ -24,7 +24,7 @@ function move<T>(arr: T[], i: number, dir: -1 | 1): T[] {
 }
 
 const STEPS = [
-  { id: "personal", label: "Personal Info" },
+  { id: "personalInfo", label: "Personal Info" },
   { id: "skills", label: "Skills" },
   { id: "experience", label: "Work Experience" },
   { id: "projects", label: "Projects" },
@@ -128,7 +128,28 @@ export function Forms() {
 
       {/* Step Content */}
       <div className="">
-        <h2 className="text-xl font-bold mb-4">{STEPS[currentStep].label}</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <h2 className="text-xl font-bold">{STEPS[currentStep].label}</h2>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-muted-foreground hover:text-foreground"
+            onClick={() => {
+              const sectionKey = STEPS[currentStep].id as keyof ResumeProfile["sectionVisibility"];
+              const currentVisibility = active.sectionVisibility?.[sectionKey];
+              const isHidden = currentVisibility === false; // undefined or true means visible
+              updateActive({
+                sectionVisibility: {
+                  ...(active.sectionVisibility || {}),
+                  [sectionKey]: isHidden ? true : false // toggle between false (hidden) and true (visible)
+                }
+              });
+            }}
+            title={active.sectionVisibility?.[STEPS[currentStep].id as keyof ResumeProfile["sectionVisibility"]] === false ? "Show section on resume" : "Hide section from resume"}
+          >
+            {active.sectionVisibility?.[STEPS[currentStep].id as keyof ResumeProfile["sectionVisibility"]] === false ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+          </Button>
+        </div>
 
         <div className="flex-1">
           {currentStep === 0 && (

@@ -13,10 +13,10 @@ export function EducationCard({ ed, index, total, onChange, onDelete, onMove, li
   const detailsOverLimit = detailsLength > limits.maxDetailsCharLength;
 
   return (
-    <Card className="p-3 space-y-3">
+    <Card className={`p-3 space-y-3 transition-opacity duration-200 ${ed.hidden ? 'opacity-50' : ''}`}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2 sm:border-none sm:pb-0">
         <div className="text-sm font-medium truncate min-w-0">{ed.school || "New school"}</div>
-        <ItemToolbar index={index} total={total} onMove={onMove} onDelete={onDelete} />
+        <ItemToolbar index={index} total={total} onMove={onMove} onDelete={onDelete} hidden={ed.hidden} onToggleHide={() => onChange({ ...ed, hidden: !ed.hidden })} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label="School"><Input value={ed.school} onChange={(e) => onChange({ ...ed, school: e.target.value })} /></Field>

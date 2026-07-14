@@ -1,16 +1,31 @@
 import { Button } from "@/shared/ui/button";
 import { Textarea } from "@/shared/ui/textarea";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Eye, EyeOff } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 
-export function BulletsEditor({ bullets, maxChar, onChange, maxBullets }: { bullets: string[]; maxChar: number, onChange: (b: string[]) => void; maxBullets: number; }) {
+export function BulletsEditor({ 
+  bullets, 
+  maxChar, 
+  onChange, 
+  maxBullets,
+  hiddenBullets = [],
+  onToggleHide
+}: { 
+  bullets: string[]; 
+  maxChar: number; 
+  onChange: (b: string[]) => void; 
+  maxBullets: number;
+  hiddenBullets?: number[];
+  onToggleHide?: (index: number) => void;
+}) {
   return (
     <div className="space-y-3">
       {bullets.map((b, i) => {
         const chars = b.length;
         const overLimit = chars > maxChar;
+        const isHidden = hiddenBullets.includes(i);
         return (
-          <div key={i} className="flex gap-2 items-start">
+          <div key={i} className={cn("flex gap-2 items-start", isHidden && "opacity-50")}>
             <div className="flex-1 space-y-1">
               <Textarea
                 rows={2}
@@ -24,6 +39,17 @@ export function BulletsEditor({ bullets, maxChar, onChange, maxBullets }: { bull
                 {chars} / {maxChar} chars
               </div>
             </div>
+            {onToggleHide && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-9 w-9 shrink-0 text-muted-foreground hover:text-foreground mt-1" 
+                onClick={() => onToggleHide(i)}
+                title={isHidden ? "Show bullet on resume" : "Hide bullet from resume"}
+              >
+                {isHidden ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </Button>
+            )}
             <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0 text-destructive hover:bg-destructive/10 hover:text-destructive mt-1" onClick={() => onChange(bullets.filter((_, idx) => idx !== i))}>
               <Trash2 className="h-4 w-4" />
             </Button>

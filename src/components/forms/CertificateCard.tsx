@@ -9,10 +9,10 @@ export function CertificateCard({ cert, index, total, onChange, onDelete, onMove
   onChange: (c: Certificate) => void; onDelete: () => void; onMove: (dir: -1 | 1) => void;
 }) {
   return (
-    <Card className="p-3 space-y-3">
+    <Card className={`p-3 space-y-3 transition-opacity duration-200 ${cert.hidden ? 'opacity-50' : ''}`}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2 sm:border-none sm:pb-0">
         <div className="text-sm font-medium truncate min-w-0">{cert.title || "New certificate"}</div>
-        <ItemToolbar index={index} total={total} onMove={onMove} onDelete={onDelete} />
+        <ItemToolbar index={index} total={total} onMove={onMove} onDelete={onDelete} hidden={cert.hidden} onToggleHide={() => onChange({ ...cert, hidden: !cert.hidden })} />
       </div>
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="sm:col-span-2">

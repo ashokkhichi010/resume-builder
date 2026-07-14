@@ -27,6 +27,8 @@ export interface WorkExperience {
   endDate: string;
   current: boolean;
   bullets: string[];
+  hidden?: boolean;
+  hiddenBullets?: number[];
 }
 
 export interface Project {
@@ -35,6 +37,8 @@ export interface Project {
   tech: string;
   link: string;
   bullets: string[];
+  hidden?: boolean;
+  hiddenBullets?: number[];
 }
 
 export interface Education {
@@ -45,6 +49,7 @@ export interface Education {
   startDate: string;
   endDate: string;
   details: string;
+  hidden?: boolean;
 }
 
 export interface Achievement {
@@ -52,6 +57,7 @@ export interface Achievement {
   title: string;
   date: string;
   description: string;
+  hidden?: boolean;
 }
 
 export interface Certificate {
@@ -60,6 +66,17 @@ export interface Certificate {
   issuer: string;
   date: string;
   link: string;
+  hidden?: boolean;
+}
+
+export interface SectionVisibility {
+  summary?: boolean;
+  skills?: boolean;
+  experience?: boolean;
+  projects?: boolean;
+  education?: boolean;
+  achievements?: boolean;
+  certificates?: boolean;
 }
 
 export interface ResumeProfile {
@@ -67,6 +84,7 @@ export interface ResumeProfile {
   profileName: string;
   selectedTemplateId: string;
   pageCount: 1 | 2;
+  sectionVisibility?: SectionVisibility;
   personalInfo: PersonalInfo;
   skills: CategorizedSkills;
   experience: WorkExperience[];

@@ -16,6 +16,7 @@ export function Classic({ p }: { p: ResumeProfile }) {
         </Section>
       )}
       <Section title="Skills" variant="classic"><SkillLines p={p} /></Section>
+      {p.experience.length > 0 && (
       <Section title="Experience" variant="classic">
         {p.experience.map((e) => (
           <div key={e.id} className="mb-3 break-inside-avoid">
@@ -30,6 +31,8 @@ export function Classic({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
+      {p.projects.length > 0 && (
       <Section title="Projects" variant="classic">
         {p.projects.map((pr) => (
           <div key={pr.id} className="mb-2 break-inside-avoid">
@@ -39,6 +42,8 @@ export function Classic({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
+      {p.education.length > 0 && (
       <Section title="Education" variant="classic">
         {p.education.map((ed) => (
           <div key={ed.id} className="mb-2 break-inside-avoid">
@@ -51,6 +56,7 @@ export function Classic({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       {p.achievements?.length > 0 && (
         <Section title="Achievements" variant="classic">
           {p.achievements.map((ach) => (

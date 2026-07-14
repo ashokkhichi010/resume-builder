@@ -12,6 +12,7 @@ export function Executive({ p }: { p: ResumeProfile }) {
       {p.personalInfo.summary && (
         <Section title="Executive Summary" variant="executive"><p>{p.personalInfo.summary}</p></Section>
       )}
+      {p.experience.length > 0 && (
       <Section title="Experience" variant="executive">
         {p.experience.map((e) => (
           <div key={e.id} className="mb-2 break-inside-avoid">
@@ -24,6 +25,7 @@ export function Executive({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       <Section title="Core Competencies" variant="executive"><SkillLines p={p} /></Section>
       <Section title="Selected Projects" variant="executive">
         {p.projects.map((pr) => (
@@ -37,6 +39,7 @@ export function Executive({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+      {p.education.length > 0 && (
       <Section title="Education" variant="executive">
         {p.education.map((ed) => (
           <div key={ed.id} className="mb-1 break-inside-avoid">
@@ -49,6 +52,7 @@ export function Executive({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       {p.achievements?.length > 0 && (
         <Section title="Achievements" variant="executive">
           {p.achievements.map((ach) => (

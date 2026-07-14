@@ -31,6 +31,7 @@ export function TechLead({ p }: { p: ResumeProfile }) {
           })}
         </div>
       </Section>
+      {p.experience.length > 0 && (
       <Section title="Experience" variant="techlead">
         {p.experience.map((e) => (
           <div key={e.id} className="mb-3 break-inside-avoid">
@@ -43,6 +44,8 @@ export function TechLead({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
+      {p.projects.length > 0 && (
       <Section title="Projects" variant="techlead">
         {p.projects.map((pr) => (
           <div key={pr.id} className="mb-2 break-inside-avoid">
@@ -55,6 +58,8 @@ export function TechLead({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
+      {p.education.length > 0 && (
       <Section title="Education" variant="techlead">
         {p.education.map((ed) => (
           <div key={ed.id} className="mb-2 break-inside-avoid">
@@ -67,6 +72,7 @@ export function TechLead({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       {p.achievements?.length > 0 && (
         <Section title="Achievements" variant="techlead">
           {p.achievements.map((ach) => (

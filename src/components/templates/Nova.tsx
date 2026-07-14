@@ -12,6 +12,7 @@ export function Nova({ p }: { p: ResumeProfile }) {
       {p.personalInfo.summary && (
         <Section title="Profile" variant="nova"><p className="text-justify">{p.personalInfo.summary}</p></Section>
       )}
+      {p.experience.length > 0 && (
       <Section title="Experience" variant="nova">
         {p.experience.map((e) => (
           <div key={e.id} className="mb-3 break-inside-avoid">
@@ -24,6 +25,8 @@ export function Nova({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
+      {p.projects.length > 0 && (
       <Section title="Projects" variant="nova">
         {p.projects.map((pr) => (
           <div key={pr.id} className="mb-3 break-inside-avoid">
@@ -36,7 +39,9 @@ export function Nova({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       <Section title="Expertise" variant="nova"><SkillLines p={p} /></Section>
+      {p.education.length > 0 && (
       <Section title="Education" variant="nova">
         {p.education.map((ed) => (
           <div key={ed.id} className="mb-2 break-inside-avoid">
@@ -49,6 +54,7 @@ export function Nova({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       {p.achievements?.length > 0 && (
         <Section title="Achievements" variant="nova">
           {p.achievements.map((ach) => (

@@ -19,6 +19,7 @@ export function Prisma({ p }: { p: ResumeProfile }) {
       {p.personalInfo.summary && (
         <Section title="Summary" variant="prisma"><p>{p.personalInfo.summary}</p></Section>
       )}
+      {p.experience.length > 0 && (
       <Section title="Experience" variant="prisma">
         {p.experience.map((e) => (
           <div key={e.id} className="mb-3 break-inside-avoid">
@@ -31,6 +32,8 @@ export function Prisma({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
+      {p.projects.length > 0 && (
       <Section title="Projects" variant="prisma">
         {p.projects.map((pr) => (
           <div key={pr.id} className="mb-3 break-inside-avoid">
@@ -43,7 +46,9 @@ export function Prisma({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       <Section title="Skills" variant="prisma"><SkillLines p={p} /></Section>
+      {p.education.length > 0 && (
       <Section title="Education" variant="prisma">
         {p.education.map((ed) => (
           <div key={ed.id} className="mb-2 break-inside-avoid">
@@ -56,6 +61,7 @@ export function Prisma({ p }: { p: ResumeProfile }) {
           </div>
         ))}
       </Section>
+    )}
       {p.achievements?.length > 0 && (
         <Section title="Achievements" variant="prisma">
           {p.achievements.map((ach) => (

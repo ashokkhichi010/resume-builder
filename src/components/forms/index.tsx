@@ -4,6 +4,7 @@ import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { Button } from "@/shared/ui/button";
 import { Plus, AlertCircle, ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
 import { uid } from "@/shared/lib/resume-seed";
 import { PAGE_LIMITS, type ResumeProfile } from "@/shared/lib/resume-types";
 import { cn } from "@/shared/lib/utils";
@@ -42,6 +43,19 @@ export function Forms() {
     updateActive({ personalInfo: { ...p.personalInfo, ...patch } });
   const setSkills = (patch: Partial<ResumeProfile["skills"]>) =>
     updateActive({ skills: { ...p.skills, ...patch } });
+
+  const handleDelete = <K extends keyof ResumeProfile>(key: K, id: string) => {
+    const arr = p[key] as any[];
+    if (!arr) return;
+    const previous = [...arr];
+    updateActive({ [key]: arr.filter((x: any) => x.id !== id) } as any);
+    toast("Item deleted", {
+      action: {
+        label: "Undo",
+        onClick: () => updateActive({ [key]: previous } as any)
+      }
+    });
+  };
 
   const pageCount = p.pageCount || 1;
   const limits = {
@@ -196,7 +210,7 @@ export function Forms() {
               {p.experience.map((e, i) => (
                 <ExperienceCard key={e.id} exp={e} index={i} total={p.experience.length} limits={limits}
                   onChange={(next) => updateActive({ experience: p.experience.map(x => x.id === e.id ? next : x) })}
-                  onDelete={() => updateActive({ experience: p.experience.filter(x => x.id !== e.id) })}
+                  onDelete={() => handleDelete("experience", e.id)}
                   onMove={(dir) => updateActive({ experience: move(p.experience, i, dir) })}
                 />
               ))}
@@ -216,7 +230,7 @@ export function Forms() {
               {p.projects.map((pr, i) => (
                 <ProjectCard key={pr.id} project={pr} index={i} total={p.projects.length} limits={limits}
                   onChange={(next) => updateActive({ projects: p.projects.map(x => x.id === pr.id ? next : x) })}
-                  onDelete={() => updateActive({ projects: p.projects.filter(x => x.id !== pr.id) })}
+                  onDelete={() => handleDelete("projects", pr.id)}
                   onMove={(dir) => updateActive({ projects: move(p.projects, i, dir) })}
                 />
               ))}
@@ -233,7 +247,7 @@ export function Forms() {
               {p.education.map((ed, i) => (
                 <EducationCard key={ed.id} ed={ed} index={i} total={p.education.length} limits={limits}
                   onChange={(next) => updateActive({ education: p.education.map(x => x.id === ed.id ? next : x) })}
-                  onDelete={() => updateActive({ education: p.education.filter(x => x.id !== ed.id) })}
+                  onDelete={() => handleDelete("education", ed.id)}
                   onMove={(dir) => updateActive({ education: move(p.education, i, dir) })}
                 />
               ))}
@@ -250,7 +264,7 @@ export function Forms() {
               {p.achievements?.map((ach, i) => (
                 <AchievementCard key={ach.id} ach={ach} index={i} total={p.achievements.length}
                   onChange={(next) => updateActive({ achievements: p.achievements.map(x => x.id === ach.id ? next : x) })}
-                  onDelete={() => updateActive({ achievements: p.achievements.filter(x => x.id !== ach.id) })}
+                  onDelete={() => handleDelete("achievements", ach.id)}
                   onMove={(dir) => updateActive({ achievements: move(p.achievements, i, dir) })}
                 />
               ))}
@@ -267,7 +281,7 @@ export function Forms() {
               {p.certificates?.map((cert, i) => (
                 <CertificateCard key={cert.id} cert={cert} index={i} total={p.certificates.length}
                   onChange={(next) => updateActive({ certificates: p.certificates.map(x => x.id === cert.id ? next : x) })}
-                  onDelete={() => updateActive({ certificates: p.certificates.filter(x => x.id !== cert.id) })}
+                  onDelete={() => handleDelete("certificates", cert.id)}
                   onMove={(dir) => updateActive({ certificates: move(p.certificates, i, dir) })}
                 />
               ))}

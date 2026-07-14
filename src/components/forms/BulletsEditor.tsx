@@ -1,6 +1,8 @@
 import { Button } from "@/shared/ui/button";
 import { Textarea } from "@/shared/ui/textarea";
 import { Plus, Trash2, Eye, EyeOff } from "lucide-react";
+import { toast } from "sonner";
+import { ConfirmDialog } from "./ConfirmDialog";
 import { cn } from "@/shared/lib/utils";
 
 export function BulletsEditor({ 
@@ -50,9 +52,25 @@ export function BulletsEditor({
                 {isHidden ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
             )}
-            <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0 text-destructive hover:bg-destructive/10 hover:text-destructive mt-1" onClick={() => onChange(bullets.filter((_, idx) => idx !== i))}>
-              <Trash2 className="h-4 w-4" />
-            </Button>
+            
+            <ConfirmDialog
+              title="Delete this bullet?"
+              description="This will remove the bullet point from your item. You can undo this action immediately after."
+              onConfirm={() => {
+                const previous = bullets;
+                onChange(bullets.filter((_, idx) => idx !== i));
+                toast.success("Bullet deleted", {
+                  action: {
+                    label: "Undo",
+                    onClick: () => onChange(previous)
+                  }
+                });
+              }}
+            >
+              <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0 text-destructive hover:bg-destructive/10 hover:text-destructive mt-1">
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </ConfirmDialog>
           </div>
         );
       })}

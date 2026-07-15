@@ -6,8 +6,8 @@ import {
 } from "lucide-react";
 import { PATHS } from "@/routes/paths";
 import type { ResumeProfile } from "@/shared/lib/resume-types";
-import { ROLE_STYLES } from "./utils";
-import { ResumeCard } from "./components/ResumeCard";
+import { ROLE_STYLES } from "../shared/utils";
+import { ResumeCard } from "../components/dashboard/ResumeCard";
 
 export default function DashboardPage() {
   const { state, createProfile, cloneProfile, deleteProfile, setActive, renameProfile } = useResume();

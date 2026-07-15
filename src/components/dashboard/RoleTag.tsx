@@ -1,4 +1,4 @@
-import { ROLE_STYLES } from "../utils";
+import { ROLE_STYLES } from "../../shared/utils";
 
 export function RoleTag({ role = 'general' }: { role?: string }) {
   const style = ROLE_STYLES[role] || ROLE_STYLES.general;

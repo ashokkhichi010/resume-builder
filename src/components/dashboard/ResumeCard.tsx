@@ -1,6 +1,6 @@
 import { MoreVertical, Pencil, Copy, Trash2, FileText } from "lucide-react";
 import type { ResumeProfile } from "@/shared/lib/resume-types";
-import { ROLE_STYLES, formatRelative } from "../utils";
+import { ROLE_STYLES, formatRelative } from "../../shared/utils";
 import { RoleTag } from "./RoleTag";
 
 interface ResumeCardProps {

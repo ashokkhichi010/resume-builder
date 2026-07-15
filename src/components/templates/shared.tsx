@@ -1,4 +1,4 @@
-import type { ResumeProfile, TemplateId } from "@/shared/lib/resume-types";
+import type { TemplateId } from "@/shared/lib/resume-types";
 import type { ReactNode } from "react";
 
 export function formatDate(d: string) {
@@ -18,38 +18,7 @@ export function dateRange(a: string, b: string, current: boolean) {
   return `${s}${s && e ? " – " : ""}${e}`;
 }
 
-export function joinContact(p: ResumeProfile, sep = " · ") {
-  return [
-    p.personalInfo.location,
-    p.personalInfo.phone,
-    p.personalInfo.email,
-    p.personalInfo.website,
-    p.personalInfo.linkedin,
-    p.personalInfo.github,
-  ]
-    .filter(Boolean)
-    .join(sep);
-}
 
-export function SkillLines({ p }: { p: ResumeProfile }) {
-  const rows: Array<[string, string]> = [
-    ["Languages", p.skills.languages],
-    ["Frameworks", p.skills.frameworks],
-    ["Tools", p.skills.tools],
-    ["Databases", p.skills.databases],
-    ["Other", p.skills.other],
-  ].filter(([, v]) => v.trim().length > 0) as Array<[string, string]>;
-  return (
-    <div className="space-y-1">
-      {rows.map(([k, v]) => (
-        <div key={k} className="leading-snug">
-          <span className="font-semibold">{k}: </span>
-          <span>{v}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 export function Section({
   title, children, variant, index

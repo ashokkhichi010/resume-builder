@@ -95,6 +95,8 @@ export const DEFAULT_SECTION_ORDER: SectionKey[] = [
 export interface ResumeProfile {
   id: string;
   profileName: string;
+  role?: 'design' | 'engineering' | 'product' | 'marketing' | 'general';
+  updatedAt?: number;
   selectedTemplateId: string;
   pageCount: 1 | 2;
   sectionVisibility?: SectionVisibility;

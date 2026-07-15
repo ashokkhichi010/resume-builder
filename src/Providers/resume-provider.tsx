@@ -40,8 +40,8 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
         profiles: s.profiles.map((p) =>
           p.id === s.activeProfileId
             ? typeof patch === "function"
-              ? patch(p)
-              : { ...p, ...patch }
+              ? { ...patch(p), updatedAt: Date.now() }
+              : { ...p, ...patch, updatedAt: Date.now() }
             : p,
         ),
       })),
@@ -64,6 +64,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
         const copy: ResumeProfile = JSON.parse(JSON.stringify(src));
         copy.id = uid();
         copy.profileName = `${src.profileName} (Copy)`;
+        copy.updatedAt = Date.now();
         // re-id nested arrays
         copy.experience = copy.experience.map((e) => ({ ...e, id: uid() }));
         copy.projects = copy.projects.map((e) => ({ ...e, id: uid() }));
@@ -92,7 +93,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
     (id: string, name: string) =>
       setState((s) => ({
         ...s,
-        profiles: s.profiles.map((p) => (p.id === id ? { ...p, profileName: name } : p)),
+        profiles: s.profiles.map((p) => (p.id === id ? { ...p, profileName: name, updatedAt: Date.now() } : p)),
       })),
     [setState],
   );

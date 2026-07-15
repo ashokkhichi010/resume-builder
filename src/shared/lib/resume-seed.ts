@@ -9,6 +9,8 @@ export function emptyProfile(name = "Untitled Resume"): ResumeProfile {
   return {
     id: uid(),
     profileName: name,
+    role: "general",
+    updatedAt: Date.now(),
     selectedTemplateId: "minimalist",
     pageCount: 1,
     sectionOrder: [...DEFAULT_SECTION_ORDER],
@@ -31,6 +33,8 @@ export function seedProfile(): ResumeProfile {
   return {
     id: uid(),
     profileName: "Full Stack Track",
+    role: "engineering",
+    updatedAt: Date.now(),
     selectedTemplateId: "minimalist",
     pageCount: 1,
     sectionOrder: [...DEFAULT_SECTION_ORDER],
@@ -172,6 +176,12 @@ export function migrateProfile(profile: any): ResumeProfile {
     delete p.github;
 
     p.contacts = contacts;
+  }
+  if (!profile.role) {
+    profile.role = "general";
+  }
+  if (!profile.updatedAt) {
+    profile.updatedAt = Date.now();
   }
   return profile as ResumeProfile;
 }

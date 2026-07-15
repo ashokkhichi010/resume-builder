@@ -11,6 +11,7 @@ import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { A4ScaleWrapper } from "./A4ScaleWrapper";
 
 export function ResumePreview() {
   const { active, updateActive } = useResume();
@@ -70,10 +71,12 @@ export function ResumePreview() {
           className="w-full h-full"
         >
           {TEMPLATE_IDS.map(templateId => (
-            <SwiperSlide key={templateId} className="w-full h-full overflow-y-auto resume-page-wrap scrollbar-none flex items-start justify-center pt-8 pb-32">
-              <div id={`resume-print-root-${templateId}`} className="resume-page transition-all duration-300">
-                <TemplateRenderer profile={{ ...active, selectedTemplateId: templateId }} />
-              </div>
+            <SwiperSlide key={templateId} className="w-full h-full overflow-y-auto resume-page-wrap scrollbar-none flex items-start justify-center">
+              <A4ScaleWrapper>
+                <div id={`resume-print-root-${templateId}`} className="resume-page">
+                  <TemplateRenderer profile={{ ...active, selectedTemplateId: templateId }} />
+                </div>
+              </A4ScaleWrapper>
             </SwiperSlide>
           ))}
         </Swiper>

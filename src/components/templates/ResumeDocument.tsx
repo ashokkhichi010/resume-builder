@@ -1,6 +1,5 @@
 import type { ResumeProfile, SectionKey } from "@/shared/lib/resume-types";
 import { DEFAULT_SECTION_ORDER } from "@/shared/lib/resume-types";
-import { joinContact } from "./shared";
 
 import { SummarySection } from './sections/SummarySection';
 import { SkillsSection } from './sections/SkillsSection';
@@ -58,7 +57,18 @@ export function ResumeDocument({ p }: { p: ResumeProfile }) {
           <span className="resume-name">{p.personalInfo.fullName || "Your Name"}</span>
           {p.personalInfo.title && <div className="resume-title">{p.personalInfo.title}</div>}
         </div>
-        <div className="resume-contact">{joinContact(p)}</div>
+        <div className="resume-contact">
+          {p.personalInfo.contacts?.map((contact, i) => (
+            <span key={contact.id} className="contact-item">
+              {
+                contact.link
+                  ? <a href={contact.link} target="_blank" rel="noreferrer" className="contact-link">{contact.title}</a>
+                  : <span>{contact.title}</span>
+              }
+              {i < p.personalInfo.contacts.length - 1 && <span className="contact-separator">{"  ·  "}</span>}
+            </span>
+          ))}
+        </div>
       </header>
 
       <div className="resume-body">

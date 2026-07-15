@@ -15,13 +15,8 @@ export function emptyProfile(name = "Untitled Resume"): ResumeProfile {
     personalInfo: {
       fullName: "",
       title: "",
-      email: "",
-      phone: "",
-      location: "",
-      website: "",
-      linkedin: "",
-      github: "",
       summary: "",
+      contacts: [],
     },
     skills: { languages: "", frameworks: "", tools: "", databases: "", other: "" },
     experience: [],
@@ -42,14 +37,16 @@ export function seedProfile(): ResumeProfile {
     personalInfo: {
       fullName: "Alex Morgan",
       title: "Senior Full Stack Engineer",
-      email: "alex.morgan@example.com",
-      phone: "+1 (415) 555-0142",
-      location: "San Francisco, CA",
-      website: "alexmorgan.dev",
-      linkedin: "linkedin.com/in/alexmorgan",
-      github: "github.com/alexmorgan",
       summary:
         "Full-stack engineer with 7+ years shipping performant web applications across React, Node.js, and cloud infrastructure. Led teams of 4-8 engineers, cut p95 latency 62% at Northwind, and mentored six engineers to senior promotion.",
+      contacts: [
+        { id: uid(), title: "San Francisco, CA", link: "" },
+        { id: uid(), title: "+1 (415) 555-0142", link: "tel:+14155550142" },
+        { id: uid(), title: "alex.morgan@example.com", link: "mailto:alex.morgan@example.com" },
+        { id: uid(), title: "alexmorgan.dev", link: "https://alexmorgan.dev" },
+        { id: uid(), title: "linkedin.com/in/alexmorgan", link: "https://linkedin.com/in/alexmorgan" },
+        { id: uid(), title: "github.com/alexmorgan", link: "https://github.com/alexmorgan" },
+      ],
     },
     skills: {
       languages: "TypeScript, JavaScript, Python, Go, SQL",
@@ -153,4 +150,28 @@ export function seedState(): AppState {
     },
   };
   return { profiles: [primary, backend], activeProfileId: primary.id };
+}
+
+export function migrateProfile(profile: any): ResumeProfile {
+  if (!profile.personalInfo.contacts) {
+    const contacts = [];
+    const p = profile.personalInfo;
+    if (p.location) contacts.push({ id: uid(), title: p.location, link: "" });
+    if (p.phone) contacts.push({ id: uid(), title: p.phone, link: `tel:${p.phone.replace(/[^0-9+]/g, '')}` });
+    if (p.email) contacts.push({ id: uid(), title: p.email, link: `mailto:${p.email}` });
+    if (p.website) contacts.push({ id: uid(), title: p.website, link: p.website.startsWith('http') ? p.website : `https://${p.website}` });
+    if (p.linkedin) contacts.push({ id: uid(), title: p.linkedin, link: p.linkedin.startsWith('http') ? p.linkedin : `https://${p.linkedin}` });
+    if (p.github) contacts.push({ id: uid(), title: p.github, link: p.github.startsWith('http') ? p.github : `https://${p.github}` });
+
+    // Delete legacy fields
+    delete p.location;
+    delete p.phone;
+    delete p.email;
+    delete p.website;
+    delete p.linkedin;
+    delete p.github;
+
+    p.contacts = contacts;
+  }
+  return profile as ResumeProfile;
 }

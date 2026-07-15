@@ -1,13 +1,14 @@
+export interface ContactItem {
+  id: string;
+  title: string;
+  link: string;
+}
+
 export interface PersonalInfo {
   fullName: string;
   title: string;
-  email: string;
-  phone: string;
-  location: string;
-  website: string;
-  linkedin: string;
-  github: string;
   summary: string;
+  contacts: ContactItem[];
 }
 
 export interface CategorizedSkills {

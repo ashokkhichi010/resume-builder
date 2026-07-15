@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { emptyProfile, seedState, uid } from "@/shared/lib/resume-seed";
+import { emptyProfile, seedState, uid, migrateProfile } from "@/shared/lib/resume-seed";
 import type { AppState, ResumeProfile } from "@/shared/lib/resume-types";
 
 interface Ctx {
@@ -17,7 +17,13 @@ interface Ctx {
 const ResumeCtx = createContext<Ctx | null>(null);
 
 export function ResumeProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useLocalStorage<AppState>("resume-builder:v1", seedState);
+  const [rawState, setState] = useLocalStorage<AppState>("resume-builder:v1", seedState);
+  
+  // Migrate loaded profiles
+  const state = useMemo(() => ({
+    ...rawState,
+    profiles: rawState.profiles.map(migrateProfile)
+  }), [rawState]);
 
   const active =
     state.profiles.find((p) => p.id === state.activeProfileId) ?? state.profiles[0];

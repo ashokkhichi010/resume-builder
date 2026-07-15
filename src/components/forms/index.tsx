@@ -3,7 +3,7 @@ import { useResume } from "@/Providers/resume-provider";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { Button } from "@/shared/ui/button";
-import { Plus, AlertCircle, ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
+import { Plus, AlertCircle, ChevronLeft, ChevronRight, Eye, EyeOff, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { uid } from "@/shared/lib/resume-seed";
 import { PAGE_LIMITS, type ResumeProfile } from "@/shared/lib/resume-types";
@@ -58,6 +58,17 @@ export function Forms() {
       }
     });
   };
+
+  const handleDeleteContact = (contact: any) => {
+    const previous = [...p.personalInfo.contacts];
+    setPI({ contacts: p.personalInfo.contacts.filter(c => c.id !== contact.id) });
+    toast("Item deleted", {
+      action: {
+        label: "Undo",
+        onClick: () => setPI({ contacts: previous })
+      }
+    });
+  }
 
   const pageCount = p.pageCount || 1;
   const limits = {
@@ -170,16 +181,47 @@ export function Forms() {
 
         <div className="flex-1">
           {currentStep === 0 && (
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Full name"><Input value={p.personalInfo.fullName} onChange={(e) => setPI({ fullName: e.target.value })} /></Field>
-              <Field label="Headline / Title"><Input value={p.personalInfo.title} onChange={(e) => setPI({ title: e.target.value })} /></Field>
-              <Field label="Email"><Input value={p.personalInfo.email} onChange={(e) => setPI({ email: e.target.value })} /></Field>
-              <Field label="Phone"><Input value={p.personalInfo.phone} onChange={(e) => setPI({ phone: e.target.value })} /></Field>
-              <Field label="Location"><Input value={p.personalInfo.location} onChange={(e) => setPI({ location: e.target.value })} /></Field>
-              <Field label="Website"><Input value={p.personalInfo.website} onChange={(e) => setPI({ website: e.target.value })} /></Field>
-              <Field label="LinkedIn"><Input value={p.personalInfo.linkedin} onChange={(e) => setPI({ linkedin: e.target.value })} /></Field>
-              <Field label="GitHub"><Input value={p.personalInfo.github} onChange={(e) => setPI({ github: e.target.value })} /></Field>
-              <div className="sm:col-span-2">
+            <div className="grid gap-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Full name"><Input value={p.personalInfo.fullName} onChange={(e) => setPI({ fullName: e.target.value })} /></Field>
+                <Field label="Headline / Title"><Input value={p.personalInfo.title} onChange={(e) => setPI({ title: e.target.value })} /></Field>
+              </div>
+
+              <div className="space-y-3 mt-2 border-t pt-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold">Contact Info</h3>
+                  <Button variant="outline" size="sm" onClick={() => setPI({ contacts: [...(p.personalInfo.contacts || []), { id: uid(), title: "", link: "" }] })}>
+                    <Plus className="h-4 w-4 mr-1" /> Add Contact
+                  </Button>
+                </div>
+
+                <div className="space-y-3">
+                  {(p.personalInfo.contacts || []).map((contact, i) => (
+                    <div key={contact.id} className="flex gap-2 items-start">
+                      <div className="flex-1 grid grid-cols-2 gap-2">
+                        <Input placeholder="Display Text (e.g. GitHub)" value={contact.title} onChange={(e) => {
+                          const next = [...p.personalInfo.contacts];
+                          next[i] = { ...contact, title: e.target.value };
+                          setPI({ contacts: next });
+                        }} />
+                        <Input placeholder="Link (Optional)" value={contact.link} onChange={(e) => {
+                          const next = [...p.personalInfo.contacts];
+                          next[i] = { ...contact, link: e.target.value };
+                          setPI({ contacts: next });
+                        }} />
+                      </div>
+                      <Button variant="ghost" size="icon" onClick={() => handleDeleteContact(contact)}>
+                        <Trash2 className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                    </div>
+                  ))}
+                  {(!p.personalInfo.contacts || p.personalInfo.contacts.length === 0) && (
+                    <div className="text-sm text-muted-foreground italic py-2">No contact info added.</div>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-2 border-t pt-4">
                 <Field label="Summary">
                   <Textarea
                     rows={4}

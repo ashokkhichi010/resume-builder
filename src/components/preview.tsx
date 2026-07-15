@@ -3,33 +3,45 @@ import { useResume } from "@/Providers/resume-provider";
 import { TEMPLATE_IDS } from "@/shared/lib/resume-types";
 import { Button } from "@/shared/ui/button";
 import { Printer, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
+import type { Swiper as SwiperType } from 'swiper';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 export function ResumePreview() {
   const { active, updateActive } = useResume();
+  const swiperRef = useRef<SwiperType | null>(null);
 
   const handlePrint = () => {
     window.print();
   };
 
-  const currentIndex = Math.max(0, (TEMPLATE_IDS as readonly string[]).indexOf(active.selectedTemplateId || "classic"));
+  const currentIndex = Math.max(0, (TEMPLATE_IDS as readonly string[]).indexOf(active.selectedTemplateId || "minimalist"));
 
-  const handlePrev = () => {
-    const prevIndex = (currentIndex - 1 + TEMPLATE_IDS.length) % TEMPLATE_IDS.length;
-    updateActive({ selectedTemplateId: TEMPLATE_IDS[prevIndex] });
-  };
+  useEffect(() => {
+    if (swiperRef.current && swiperRef.current.activeIndex !== currentIndex) {
+      swiperRef.current.slideTo(currentIndex);
+    }
+  }, [currentIndex]);
 
-  const handleNext = () => {
-    const nextIndex = (currentIndex + 1) % TEMPLATE_IDS.length;
-    updateActive({ selectedTemplateId: TEMPLATE_IDS[nextIndex] });
+  const handleSlideChange = (swiper: SwiperType) => {
+    const newTemplateId = TEMPLATE_IDS[swiper.activeIndex];
+    if (newTemplateId !== active.selectedTemplateId) {
+      updateActive({ selectedTemplateId: newTemplateId });
+    }
   };
 
   return (
     <div className="h-full relative flex flex-col bg-muted/40 w-full overflow-hidden group">
 
-      {/* Swappable Slides Navigation Buttons */}
+      {/* Navigation Buttons */}
       <div className="absolute inset-y-0 left-2 sm:left-4 flex items-center z-20 no-print pointer-events-none">
         <Button
-          onClick={handlePrev}
+          onClick={() => swiperRef.current?.slidePrev()}
           size="icon"
           variant="outline"
           className="rounded-full shadow-lg h-10 w-10 sm:h-12 sm:w-12 bg-background/90 backdrop-blur-md pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-200 -ml-4 group-hover:ml-0 hover:bg-background hover:scale-110 border-muted"
@@ -40,7 +52,7 @@ export function ResumePreview() {
 
       <div className="absolute inset-y-0 right-2 sm:right-4 flex items-center z-20 no-print pointer-events-none">
         <Button
-          onClick={handleNext}
+          onClick={() => swiperRef.current?.slideNext()}
           size="icon"
           variant="outline"
           className="rounded-full shadow-lg h-10 w-10 sm:h-12 sm:w-12 bg-background/90 backdrop-blur-md pointer-events-auto opacity-0 group-hover:opacity-100 transition-all duration-200 -mr-4 group-hover:mr-0 hover:bg-background hover:scale-110 border-muted"
@@ -49,10 +61,22 @@ export function ResumePreview() {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto resume-page-wrap scrollbar-none">
-        <div id="resume-print-root" className="resume-page transition-all duration-300">
-          <TemplateRenderer profile={active} />
-        </div>
+      <div className="flex-1 w-full h-full relative">
+        <Swiper
+          modules={[Pagination, Navigation]}
+          onSwiper={(swiper) => { swiperRef.current = swiper; }}
+          onSlideChange={handleSlideChange}
+          initialSlide={currentIndex}
+          className="w-full h-full"
+        >
+          {TEMPLATE_IDS.map(templateId => (
+            <SwiperSlide key={templateId} className="w-full h-full overflow-y-auto resume-page-wrap scrollbar-none flex items-start justify-center pt-8 pb-32">
+              <div id={`resume-print-root-${templateId}`} className="resume-page transition-all duration-300">
+                <TemplateRenderer profile={{ ...active, selectedTemplateId: templateId }} />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       {/* Enhanced Floating Print Button */}

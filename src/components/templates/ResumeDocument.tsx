@@ -50,8 +50,8 @@ export function ResumeDocument({ p }: { p: ResumeProfile }) {
   const order = p.sectionOrder || DEFAULT_SECTION_ORDER;
 
   return (
-    <div className="resume-document">
-      <style dangerouslySetInnerHTML={{ __html: css }} />
+    <div className={`resume-document theme-${p.selectedTemplateId}`}>
+      <style dangerouslySetInnerHTML={{ __html: `@scope (.theme-${p.selectedTemplateId}) { ${css} }` }} />
       <header className="resume-header">
         <div className="resume-name-title">
           <span className="resume-name">{p.personalInfo.fullName || "Your Name"}</span>

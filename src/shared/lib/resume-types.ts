@@ -79,12 +79,25 @@ export interface SectionVisibility {
   certificates?: boolean;
 }
 
+export type SectionKey = "summary" | "skills" | "experience" | "projects" | "education" | "achievements" | "certificates";
+
+export const DEFAULT_SECTION_ORDER: SectionKey[] = [
+  "summary",
+  "experience",
+  "projects",
+  "skills",
+  "education",
+  "achievements",
+  "certificates",
+];
+
 export interface ResumeProfile {
   id: string;
   profileName: string;
   selectedTemplateId: string;
   pageCount: 1 | 2;
   sectionVisibility?: SectionVisibility;
+  sectionOrder?: SectionKey[];
   personalInfo: PersonalInfo;
   skills: CategorizedSkills;
   experience: WorkExperience[];

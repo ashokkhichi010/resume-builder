@@ -1,0 +1,17 @@
+.resume-document { font-family: 'Inter', sans-serif; font-size: 10.5pt; color: black; line-height: 1.625; }
+.resume-header { margin-bottom: 16px; }
+.resume-name { font-size: 24pt; font-weight: 600; letter-spacing: -0.025em; margin: 0; }
+.resume-title { font-size: 12pt; color: #404040; margin-top: 2px; }
+.resume-contact { margin-top: 8px; font-size: 9.5pt; color: #404040; }
+.section-title { font-size: 11pt; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: #262626; margin: 16px 0 6px; }
+.entry { margin-bottom: 12px; page-break-inside: avoid; }
+.entry-header { display: flex; flex-direction: row; justify-content: space-between; align-items: baseline; }
+.entry-title { font-weight: 600; }
+.entry-date { color: #525252; }
+.entry-subtitle { color: #404040; }
+.entry-details { color: #404040; }
+.bullet-list { list-style: disc; margin-left: 20px; margin-top: 4px; }
+.skill-list { margin-top: 4px; }
+.skill-row { line-height: 1.625; }
+.skill-label { font-weight: 600; }
+.summary-text { margin: 0; }

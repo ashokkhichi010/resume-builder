@@ -10,7 +10,7 @@ interface EditorHeaderProps {
   togglePreview?: () => void;
 }
 
-export function Dashboard({ showPreview, togglePreview }: EditorHeaderProps) {
+export function EditorHeader({ showPreview, togglePreview }: EditorHeaderProps) {
   const { active, renameProfile } = useResume();
   const navigate = useNavigate();
 

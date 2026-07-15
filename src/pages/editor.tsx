@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dashboard } from "@/components/dashboard";
+import { EditorHeader } from "@/components/EditorHeader";
 import { Forms } from "@/components/forms";
 import { ResumePreview } from "@/components/preview";
 import { Edit2, Eye, Printer } from "lucide-react";
@@ -11,7 +11,7 @@ export default function EditorPage() {
 
   return (
     <div className="min-h-screen bg-muted/40 flex flex-col pb-[60px] lg:pb-0 print:block print:h-auto print:bg-white">
-      <Dashboard
+      <EditorHeader
         showPreview={showPreview}
         togglePreview={() => setShowPreview(!showPreview)}
       />

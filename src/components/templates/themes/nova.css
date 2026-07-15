@@ -1,0 +1,17 @@
+.resume-document { font-family: 'Inter', sans-serif; font-size: 10pt; color: black; line-height: 1.625; }
+.resume-header { text-align: center; margin-bottom: 24px; }
+.resume-name { font-size: 24pt; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; color: #171717; }
+.resume-title { font-size: 11pt; letter-spacing: 0.2em; text-transform: uppercase; color: #737373; margin-top: 8px; }
+.resume-contact { margin-top: 12px; font-size: 9pt; color: #a3a3a3; letter-spacing: 0.05em; }
+.section-title { font-size: 11pt; font-weight: 600; font-style: italic; color: #262626; border-bottom: 1px solid #d4d4d4; padding-bottom: 4px; margin: 20px 0 8px; }
+.entry { margin-bottom: 12px; page-break-inside: avoid; }
+.entry-header { display: flex; flex-direction: row; justify-content: space-between; align-items: baseline; }
+.entry-title { font-weight: 600; font-size: 10.5pt; color: #171717; }
+.entry-date { color: #737373; font-size: 9pt; letter-spacing: 0.05em; }
+.entry-subtitle { color: #525252; }
+.entry-details { color: #737373; font-style: italic; }
+.bullet-list { list-style: circle; margin-left: 20px; margin-top: 4px; color: #404040; }
+.skill-list { margin-top: 4px; }
+.skill-row { line-height: 1.625; }
+.skill-label { font-weight: 600; color: #262626; font-style: italic; }
+.summary-text { margin: 0; color: #404040; text-align: justify; }

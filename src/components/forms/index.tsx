@@ -15,6 +15,7 @@ import { ProjectCard } from "./ProjectCard";
 import { EducationCard } from "./EducationCard";
 import { AchievementCard } from "./AchievementCard";
 import { CertificateCard } from "./CertificateCard";
+import { SectionOrderEditor } from "./SectionOrderEditor";
 
 function move<T>(arr: T[], i: number, dir: -1 | 1): T[] {
   const j = i + dir;
@@ -32,6 +33,7 @@ const STEPS = [
   { id: "education", label: "Education" },
   { id: "achievements", label: "Achievements" },
   { id: "certificates", label: "Certificates" },
+  { id: "sectionOrder", label: "Section Order" },
 ];
 
 export function Forms() {
@@ -147,8 +149,9 @@ export function Forms() {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-foreground"
+            className={`h-8 w-8 text-muted-foreground hover:text-foreground ${currentStep === 7 ? "hidden" : ""}`}
             onClick={() => {
+              if (currentStep === 7) return;
               const sectionKey = STEPS[currentStep].id as keyof ResumeProfile["sectionVisibility"];
               const currentVisibility = active.sectionVisibility?.[sectionKey];
               const isHidden = currentVisibility === false; // undefined or true means visible
@@ -161,7 +164,7 @@ export function Forms() {
             }}
             title={active.sectionVisibility?.[STEPS[currentStep].id as keyof ResumeProfile["sectionVisibility"]] === false ? "Show section on resume" : "Hide section from resume"}
           >
-            {active.sectionVisibility?.[STEPS[currentStep].id as keyof ResumeProfile["sectionVisibility"]] === false ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            {currentStep < 7 && active.sectionVisibility?.[STEPS[currentStep].id as keyof ResumeProfile["sectionVisibility"]] === false ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </Button>
         </div>
 
@@ -291,6 +294,10 @@ export function Forms() {
                 <Plus className="h-4 w-4 mr-2" /> Add Certificate
               </Button>
             </div>
+          )}
+
+          {currentStep === 7 && (
+            <SectionOrderEditor />
           )}
         </div>
 

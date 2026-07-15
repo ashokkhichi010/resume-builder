@@ -1,4 +1,5 @@
 import type { ResumeProfile, AppState } from "./resume-types";
+import { DEFAULT_SECTION_ORDER } from "./resume-types";
 
 export function uid() {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
@@ -10,6 +11,7 @@ export function emptyProfile(name = "Untitled Resume"): ResumeProfile {
     profileName: name,
     selectedTemplateId: "minimalist",
     pageCount: 1,
+    sectionOrder: [...DEFAULT_SECTION_ORDER],
     personalInfo: {
       fullName: "",
       title: "",
@@ -36,6 +38,7 @@ export function seedProfile(): ResumeProfile {
     profileName: "Full Stack Track",
     selectedTemplateId: "minimalist",
     pageCount: 1,
+    sectionOrder: [...DEFAULT_SECTION_ORDER],
     personalInfo: {
       fullName: "Alex Morgan",
       title: "Senior Full Stack Engineer",

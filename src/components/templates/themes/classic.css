@@ -1,0 +1,17 @@
+.resume-document { font-family: 'Georgia', serif; font-size: 11pt; color: black; line-height: 1.375; }
+.resume-header { text-align: center; border-bottom: 1px solid black; padding-bottom: 12px; margin-bottom: 12px; }
+.resume-name { font-size: 22pt; font-weight: bold; text-transform: uppercase; margin: 0; }
+.resume-title { font-style: italic; margin-top: 4px; }
+.resume-contact { margin-top: 4px; font-size: 10pt; }
+.section-title { font-size: 12pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; text-align: center; border-bottom: 1px solid black; padding-bottom: 4px; margin: 16px 0 8px; }
+.entry { margin-bottom: 12px; page-break-inside: avoid; }
+.entry-header { display: flex; flex-direction: row; justify-content: space-between; align-items: baseline; }
+.entry-title { font-weight: bold; }
+.entry-date { font-style: italic; }
+.entry-subtitle { font-style: italic; }
+.entry-details { font-style: italic; }
+.bullet-list { list-style: disc; margin-left: 20px; margin-top: 4px; }
+.skill-list { margin-top: 4px; }
+.skill-row { line-height: 1.375; }
+.skill-label { font-weight: bold; }
+.summary-text { margin: 0; }

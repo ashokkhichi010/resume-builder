@@ -5,7 +5,6 @@ import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Plus, Trash2, Copy, Edit3, FolderOpen, ArrowLeft } from "lucide-react";
 import { PATHS } from "@/routes/paths";
-import { TemplateRenderer } from "@/components/templates";
 
 import {
   AlertDialog,
@@ -26,6 +25,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui/dialog";
+import { TemplateRenderer } from "@/components/templates";
 
 export default function DashboardPage() {
   const { state, createProfile, cloneProfile, deleteProfile, setActive, renameProfile } = useResume();

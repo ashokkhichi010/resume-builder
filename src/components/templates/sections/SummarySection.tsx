@@ -1,4 +1,5 @@
-export function SummarySection({ p }) {
+import type { ResumeProfile } from "@/shared/lib/resume-types";
+export function SummarySection({ p }: { p: ResumeProfile }) {
   if (!p.personalInfo.summary) return null;
   return (
     <section className="resume-section resume-section--summary">

@@ -1,9 +1,11 @@
-export function CertificatesSection({ p }) {
+import { formatDate } from "../shared";
+import type { ResumeProfile } from "@/shared/lib/resume-types";
+export function CertificatesSection({ p }: { p: ResumeProfile }) {
   if (!p.certificates || p.certificates.length === 0) return null;
   return (
     <section className="resume-section resume-section--certificates">
       <h2 className="section-title">Certificates</h2>
-      {p.certificates.map((cert) => (
+      {p.certificates.map((cert: any) => (
         <div key={cert.id} className="entry">
           <div className="entry-header">
             <span className="entry-title">{cert.title}</span>

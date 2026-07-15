@@ -1,22 +1,17 @@
 export function SkillsSection({ p }) {
-  const rows = [
-    ["Languages", p.skills.languages],
-    ["Frameworks", p.skills.frameworks],
-    ["Tools", p.skills.tools],
-    ["Databases", p.skills.databases],
-    ["Other", p.skills.other],
-  ].filter(([, v]) => v.trim().length > 0);
+  if (!p.skills || p.skills.length === 0) return null;
 
-  if (rows.length === 0) return null;
+  const visibleSkills = p.skills.filter(s => s.items.trim().length > 0);
+  if (visibleSkills.length === 0) return null;
 
   return (
     <section className="resume-section resume-section--skills">
       <h2 className="section-title">Skills</h2>
       <div className="skill-list">
-        {rows.map(([k, v]) => (
-          <div key={k} className="skill-row">
-            <span className="skill-label">{k}: </span>
-            <span className="skill-value">{v}</span>
+        {visibleSkills.map((skill) => (
+          <div key={skill.id} className="skill-row">
+            {skill.name && <span className="skill-label">{skill.name}: </span>}
+            <span className="skill-value">{skill.items}</span>
           </div>
         ))}
       </div>

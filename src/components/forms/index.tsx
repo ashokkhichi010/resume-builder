@@ -43,8 +43,6 @@ export function Forms() {
   const p = active;
   const setPI = (patch: Partial<ResumeProfile["personalInfo"]>) =>
     updateActive({ personalInfo: { ...p.personalInfo, ...patch } });
-  const setSkills = (patch: Partial<ResumeProfile["skills"]>) =>
-    updateActive({ skills: { ...p.skills, ...patch } });
 
   const handleDelete = <K extends keyof ResumeProfile>(key: K, id: string) => {
     const arr = p[key] as any[];
@@ -86,7 +84,7 @@ export function Forms() {
 
   const sectionCount =
     1 + // Personal Info
-    (Object.values(p.skills).some(v => v.trim()) ? 1 : 0) +
+    (p.skills.length > 0 ? 1 : 0) +
     (p.experience.length > 0 ? 1 : 0) +
     (p.projects.length > 0 ? 1 : 0) +
     (p.education.length > 0 ? 1 : 0) +
@@ -238,12 +236,44 @@ export function Forms() {
           )}
 
           {currentStep === 1 && (
-            <div className="grid gap-4">
-              {(["languages", "frameworks", "tools", "databases", "other"] as const).map(k => (
-                <Field key={k} label={k}>
-                  <Input value={p.skills[k]} onChange={(e) => setSkills({ [k]: e.target.value })} placeholder="Comma-separated" />
-                </Field>
+            <div className="space-y-4">
+              {p.skills.map((skillCat, i) => (
+                <div key={skillCat.id} className="relative flex gap-2 items-start border rounded-lg p-3 bg-card shadow-sm group">
+                  <div className="flex-1 grid gap-3">
+                    <Field label="Category Name (e.g. Languages)">
+                      <Input value={skillCat.name} onChange={(e) => {
+                        const next = [...p.skills];
+                        next[i] = { ...skillCat, name: e.target.value };
+                        updateActive({ skills: next });
+                      }} placeholder="Languages" />
+                    </Field>
+                    <Field label="Skills">
+                      <Textarea value={skillCat.items} onChange={(e) => {
+                        const next = [...p.skills];
+                        next[i] = { ...skillCat, items: e.target.value };
+                        updateActive({ skills: next });
+                      }} placeholder="Comma-separated skills..." className="min-h-[80px]" />
+                    </Field>
+                  </div>
+                  
+                  <div className="flex flex-col gap-1 items-center shrink-0 w-8">
+                    <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={() => updateActive({ skills: move(p.skills, i, -1) })} disabled={i === 0}>
+                      <ChevronLeft className="h-4 w-4 rotate-90" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={() => handleDelete("skills", skillCat.id)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100" onClick={() => updateActive({ skills: move(p.skills, i, 1) })} disabled={i === p.skills.length - 1}>
+                      <ChevronRight className="h-4 w-4 rotate-90" />
+                    </Button>
+                  </div>
+                </div>
               ))}
+              <Button variant="outline" className="w-full border-dashed" onClick={() => updateActive({
+                skills: [...p.skills, { id: uid(), name: "", items: "" }],
+              })}>
+                <Plus className="h-4 w-4 mr-2" /> Add Skill Category
+              </Button>
             </div>
           )}
 

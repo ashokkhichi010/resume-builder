@@ -20,7 +20,7 @@ export function emptyProfile(name = "Untitled Resume"): ResumeProfile {
       summary: "",
       contacts: [],
     },
-    skills: { languages: "", frameworks: "", tools: "", databases: "", other: "" },
+    skills: [],
     experience: [],
     projects: [],
     education: [],
@@ -52,13 +52,13 @@ export function seedProfile(): ResumeProfile {
         { id: uid(), title: "github.com/alexmorgan", link: "https://github.com/alexmorgan" },
       ],
     },
-    skills: {
-      languages: "TypeScript, JavaScript, Python, Go, SQL",
-      frameworks: "React, Next.js, Node.js, Express, FastAPI, TanStack",
-      tools: "Docker, Kubernetes, Terraform, AWS, GitHub Actions, Vercel",
-      databases: "PostgreSQL, Redis, DynamoDB, MongoDB",
-      other: "gRPC, GraphQL, OpenTelemetry, System Design, Team Leadership",
-    },
+    skills: [
+      { id: uid(), name: "Languages", items: "TypeScript, JavaScript, Python, Go, SQL" },
+      { id: uid(), name: "Frameworks", items: "React, Next.js, Node.js, Express, FastAPI, TanStack" },
+      { id: uid(), name: "Tools", items: "Docker, Kubernetes, Terraform, AWS, GitHub Actions, Vercel" },
+      { id: uid(), name: "Databases", items: "PostgreSQL, Redis, DynamoDB, MongoDB" },
+      { id: uid(), name: "Other", items: "gRPC, GraphQL, OpenTelemetry, System Design, Team Leadership" }
+    ],
     experience: [
       {
         id: uid(),
@@ -183,5 +183,16 @@ export function migrateProfile(profile: any): ResumeProfile {
   if (!profile.updatedAt) {
     profile.updatedAt = Date.now();
   }
+  
+  if (profile.skills && !Array.isArray(profile.skills)) {
+    const skillsArray = [];
+    if (profile.skills.languages) skillsArray.push({ id: uid(), name: "Languages", items: profile.skills.languages });
+    if (profile.skills.frameworks) skillsArray.push({ id: uid(), name: "Frameworks", items: profile.skills.frameworks });
+    if (profile.skills.tools) skillsArray.push({ id: uid(), name: "Tools", items: profile.skills.tools });
+    if (profile.skills.databases) skillsArray.push({ id: uid(), name: "Databases", items: profile.skills.databases });
+    if (profile.skills.other) skillsArray.push({ id: uid(), name: "Other", items: profile.skills.other });
+    profile.skills = skillsArray;
+  }
+
   return profile as ResumeProfile;
 }

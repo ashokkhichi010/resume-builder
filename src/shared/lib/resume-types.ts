@@ -11,12 +11,10 @@ export interface PersonalInfo {
   contacts: ContactItem[];
 }
 
-export interface CategorizedSkills {
-  languages: string;
-  frameworks: string;
-  tools: string;
-  databases: string;
-  other: string;
+export interface SkillCategory {
+  id: string;
+  name: string;
+  items: string;
 }
 
 export interface WorkExperience {
@@ -102,7 +100,7 @@ export interface ResumeProfile {
   sectionVisibility?: SectionVisibility;
   sectionOrder?: SectionKey[];
   personalInfo: PersonalInfo;
-  skills: CategorizedSkills;
+  skills: SkillCategory[];
   experience: WorkExperience[];
   projects: Project[];
   education: Education[];

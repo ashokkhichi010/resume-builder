@@ -8,7 +8,7 @@ function filterProfile(p: ResumeProfile): ResumeProfile {
         ...p,
         skills: vis.skills !== false
             ? p.skills
-            : { languages: "", frameworks: "", tools: "", databases: "", other: "" },
+            : [],
         experience: vis.experience !== false
             ? p.experience
                 .filter(e => !e.hidden)

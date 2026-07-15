@@ -1,5 +1,4 @@
 import { MoreVertical, Pencil, Copy, Trash2, FileText } from "lucide-react";
-import { TemplateRenderer } from "@/components/templates";
 import type { ResumeProfile } from "@/shared/lib/resume-types";
 import { ROLE_STYLES, formatRelative } from "../utils";
 import { RoleTag } from "./RoleTag";
@@ -41,13 +40,14 @@ export function ResumeCard({
       >
         <div className="bg-[#FBFAF7] border-b border-[#E1E5EB] rounded-t-[16px] overflow-hidden relative">
           <div className="h-2 w-full" style={{ background: (ROLE_STYLES[resume.role || 'general'] || ROLE_STYLES.general).accent }} />
-          
-          <div className="h-48 flex items-start justify-center overflow-hidden relative p-4 group-hover:bg-black/5 transition-colors">
+
+          <div className="h-48 flex items-start justify-center overflow-hidden relative group-hover:bg-black/5 transition-colors">
             {/* Miniature Resume Preview */}
-            <div className="w-[8.5in] h-[11in] bg-white shadow-sm origin-top scale-[0.7] pointer-events-none group-hover:scale-[0.6] transition-transform duration-500 ease-out">
-              <TemplateRenderer profile={resume} />
-            </div>
-            
+            <img
+              src="/assets/resume_mockup.png"
+              alt="Resume Architect Editor Preview"
+            />
+
             {/* Overlay Action */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/10 backdrop-blur-[1px] z-20">
               <span className="bg-[#9C6A1E] text-white px-5 py-2.5 rounded-[10px] font-semibold text-sm shadow-md">Open Editor</span>

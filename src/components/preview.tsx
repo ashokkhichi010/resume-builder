@@ -62,7 +62,7 @@ export function ResumePreview() {
         </Button>
       </div>
 
-      <div className="flex-1 w-full h-full relative">
+      <div className="flex-1 w-full h-full relative no-print">
         <Swiper
           modules={[Pagination, Navigation]}
           onSwiper={(swiper) => { swiperRef.current = swiper; }}
@@ -80,6 +80,13 @@ export function ResumePreview() {
             </SwiperSlide>
           ))}
         </Swiper>
+      </div>
+
+      {/* Print-only clean rendering without scaling or swiper wrappers */}
+      <div className="hidden print:block w-full">
+        <div id="resume-print-root" className="resume-page">
+          <TemplateRenderer profile={active} />
+        </div>
       </div>
 
       {/* Enhanced Floating Print Button */}
